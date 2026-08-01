@@ -1,0 +1,278 @@
+:root {
+    --indigo-dark: #0A192F;
+    --teal-dark: #003D4D;
+    --accent-cyan: #64FFDA;
+    --text-primary: #CCD6F6;
+    --text-secondary: #8892B0;
+    --card-bg: rgba(10, 25, 47, 0.85);
+    --border-color: rgba(100, 255, 218, 0.1);
+}
+
+/* ==== NAVIGATION BAR ==== */
+#main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(10, 25, 47, 0.9);
+    padding: 1rem 2rem;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    transform: translateY(-100%);
+    transition: transform 0.5s ease-out;
+}
+#main-nav.scrolled {
+    transform: translateY(0);
+}
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+.nav-logo-icon {
+    height: 40px;
+    width: auto;
+}
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+.nav-links a {
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.nav-links a:hover {
+    color: var(--accent-cyan);
+}
+.nav-cta {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+    border-radius: 20px;
+}
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--accent-cyan);
+    cursor: pointer;
+}
+.nav-toggle svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* FOOTER LOGO SPECIFIC STYLES */
+.footer-brand .logo-link {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    justify-content: flex-start;
+}
+.footer-logo-icon {
+    height: 30px;
+    width: auto;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--indigo-dark), var(--teal-dark));
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+#hero-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* ... (All other CSS rules remain the same) ... */
+h1, h2, h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); text-align: center; }
+h3 { font-size: 1.5rem; color: var(--text-primary); }
+
+p {
+    color: var(--text-secondary);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+a:hover { color: white; }
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 2rem;
+    position: relative;
+}
+.hero-content { max-width: 900px; }
+.hero h1 span { color: var(--accent-cyan); }
+.hero p { font-size: 1.25rem; margin: 1.5rem 0 2.5rem; }
+.cta-button {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: var(--accent-cyan);
+    color: var(--indigo-dark);
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+}
+.cta-button:hover {
+    background-color: white;
+    box-shadow: 0 0 30px rgba(100, 255, 218, 0.5);
+    transform: translateY(-3px);
+}
+.scroll-cue { position: absolute; bottom: 2rem; animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+
+.content-section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; text-align: center; }
+.section-title { margin-bottom: 3rem; position: relative; }
+.section-title::after { content: ''; position: absolute; bottom: -1rem; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background-color: var(--accent-cyan); }
+.section-body { font-size: 1.1rem; color: var(--text-primary); }
+.stealth-mode { margin-top: 2rem; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent-cyan); display: inline-block; }
+
+.values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; text-align: left; }
+.value-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 2.5rem; border-radius: 8px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.value-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.value-icon { color: var(--accent-cyan); margin-bottom: 1.5rem; }
+.value-icon svg { width: 40px; height: 40px; }
+
+.features-list { margin: 2rem 0; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+.features-list span { font-family: 'Space Grotesk', sans-serif; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; }
+.features-list i { color: var(--accent-cyan); }
+.for-who { font-size: 1rem; color: var(--text-secondary); }
+
+.timeline { position: relative; max-width: 600px; margin: 4rem auto 0; padding-left: 2rem; border-left: 2px solid var(--border-color); }
+.timeline-item { position: relative; margin-bottom: 3rem; text-align: left; }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot { position: absolute; left: -2.7rem; top: 5px; width: 20px; height: 20px; background-color: var(--accent-cyan); border-radius: 50%; border: 4px solid var(--indigo-dark); }
+.timeline-content h3 { margin-bottom: 0.5rem; }
+
+.signup-section { background: rgba(0,0,0,0.1); border-radius: 12px; }
+.signup-form { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 3rem; flex-wrap: wrap; }
+.signup-form input { font-family: 'Inter', sans-serif; width: 100%; max-width: 400px; padding: 1rem; border-radius: 50px; border: 1px solid var(--text-secondary); background: var(--indigo-dark); color: var(--text-primary); font-size: 1rem; }
+.signup-form button { font-family: 'Space Grotesk', sans-serif; padding: 1rem 2rem; border: none; border-radius: 50px; background-color: var(--accent-cyan); color: var(--indigo-dark); font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; }
+.signup-form button:hover { background-color: white; }
+.form-status { margin-top: 1.5rem; font-weight: 600; min-height: 24px; }
+
+.community-form { max-width: 600px; margin: 3rem auto 0; text-align: left; }
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-family: 'Space Grotesk', sans-serif; color: var(--text-secondary); }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 1rem; border-radius: 8px; border: 1px solid var(--text-secondary); background: var(--indigo-dark); color: var(--text-primary); font-size: 1rem; font-family: 'Inter', sans-serif; }
+.form-group textarea { resize: vertical; min-height: 120px; }
+.community-form .cta-button { width: 100%; border: none; cursor: pointer; }
+
+.site-footer { background: var(--indigo-dark); padding: 4rem 2rem 2rem; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; margin-bottom: 3rem; }
+.footer-brand h3 { font-size: 1.8rem; }
+.footer-links a, .footer-social a { display: block; margin-bottom: 0.5rem; color: var(--text-secondary); }
+.footer-social div { display: flex; gap: 1rem; }
+.footer-bottom { text-align: center; border-top: 1px solid var(--border-color); padding-top: 2rem; font-size: 0.9rem; color: var(--text-secondary); }
+.footer-bottom a { color: var(--text-secondary); text-decoration: underline; }
+
+.fade-in { animation: fadeInAnimation 1s ease-in forwards; opacity: 0; }
+.fade-in:nth-child(1) { animation-delay: 0.2s; }
+.fade-in:nth-child(2) { animation-delay: 0.4s; }
+.fade-in:nth-child(3) { animation-delay: 0.6s; }
+@keyframes fadeInAnimation { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* ==== MOBILE RESPONSIVE STYLES ==== */
+@media (max-width: 820px) {
+    .logo-text { display: none; }
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(10, 25, 47, 0.98); padding: 1rem 0; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); }
+    .nav-links.active { display: flex; }
+    .nav-links a { padding: 1rem 2rem; text-align: center; border-bottom: 1px solid var(--border-color); width: 100%; }
+    .nav-links a:last-child { border-bottom: none; }
+    .nav-cta { width: calc(100% - 4rem); margin: 1rem auto 0; }
+    .nav-toggle { display: block; }
+}/* Add this to the end of your style.css file */
+
+.nav-cta-group {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.community-cta {
+    background-color: transparent;
+    color: var(--accent-cyan);
+    border: 1px solid var(--accent-cyan);
+}
+.community-cta:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+    color: white;
+}
+
+/* Style for active link in nav */
+.nav-links a.active {
+    color: var(--accent-cyan);
+    font-weight: 700;
+}
+
+/* Styles for standalone pages like community.html */
+.subpage-body .hero, .subpage-body #hero-canvas {
+    display: none; /* Hide hero section on subpages */
+}
+.standalone-section {
+    padding-top: 10rem; /* Add space for the fixed nav bar */
+    min-height: calc(100vh - 300px); /* Ensure page has height */
+}
+
+/* Responsive adjustments for new button */
+@media (max-width: 820px) {
+    .nav-cta-group {
+        display: none; /* Hide the button group in mobile nav view */
+    }
+    .nav-links {
+        /* This will add the buttons into the mobile dropdown */
+        align-items: center;
+    }
+}
