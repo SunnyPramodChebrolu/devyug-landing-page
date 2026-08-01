@@ -1,27 +1,73 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Cpu, EyeOff, LayoutGrid, Terminal } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Terminal, Shield, Cpu, Activity, CheckCircle2, ArrowRight, Layers, Lock, Zap } from "lucide-react";
 
 export default function Engineering() {
-  const [activeStep, setActiveStep] = useState<number | null>(null);
+  const [activeStep, setActiveStep] = useState<number>(0);
 
   const modules = [
     {
+      id: "edge",
       icon: <Terminal className="w-4 h-4 text-brand-emerald" />,
-      title: "Edge Runtime",
-      description: "Compiling code globally at edge points, lowering latency and delivering static pages in under 80ms.",
+      title: "Global Edge Runtime",
+      tagline: "< 80ms Global Response Time",
+      description: "Distributed execution layers compile and serve static asset bundles directly from edge locations closest to the client.",
+      metrics: [
+        { label: "Edge Latency", value: "14ms avg" },
+        { label: "Uptime SLA", value: "99.99%" },
+        { label: "Routing", value: "Geo-IP Anycast" },
+      ],
+      codeSnippet: `// Edge Worker Ingress
+export async function onRequest(context) {
+  const { request, env } = context;
+  const clientRegion = request.headers.get("cf-ipcountry");
+  return await env.EDGE_CACHE.match(request, {
+    minTtl: 31536000
+  });
+}`
     },
     {
-      icon: <EyeOff className="w-4 h-4 text-brand-teal" />,
-      title: "Data Sovereignty",
-      description: "Zero-knowledge encryption layers ensure client data is fully obfuscated at the device level.",
+      id: "sovereignty",
+      icon: <Shield className="w-4 h-4 text-brand-teal" />,
+      title: "Zero-Knowledge Data Sovereignty",
+      tagline: "AES-256 Client-Side Enclave",
+      description: "Cryptographic encryption keys stay exclusively on patient and family devices. Cloud nodes store zero unencrypted data.",
+      metrics: [
+        { label: "Encryption", value: "AES-256-GCM" },
+        { label: "Key Exchange", value: "ECDH P-384" },
+        { label: "Zero Knowledge", value: "Verified" },
+      ],
+      codeSnippet: `// Cryptographic Enclave Vault
+const enclave = await crypto.subtle.generateKey(
+  { name: "AES-GCM", length: 256 },
+  false,
+  ["encrypt", "decrypt"]
+);
+const ciphertext = await crypto.subtle.encrypt(
+  { name: "AES-GCM", iv },
+  enclave,
+  payload
+);`
     },
     {
-      icon: <LayoutGrid className="w-4 h-4 text-brand-blue" />,
-      title: "Component Sandbox",
-      description: "Clean, modular code design with atomic rendering schemas and dynamic bundle split controls.",
+      id: "sandbox",
+      icon: <Layers className="w-4 h-4 text-brand-blue" />,
+      title: "Modular Atomic Sandbox",
+      tagline: "Strict Type Safety & Isolated Execution",
+      description: "Atomic component architecture backed by strict compile checks and dynamic bundle splitting for maximum reliability.",
+      metrics: [
+        { label: "Type Coverage", value: "100% Strict" },
+        { label: "Bundle Size", value: "Optimal JS" },
+        { label: "Isolation", value: "Containerized" },
+      ],
+      codeSnippet: `// Immutable Pipeline Contract
+export interface PipelineSchema<T> {
+  readonly version: "2026.1";
+  readonly payload: Readonly<T>;
+  verifyIntegrity(): Promise<boolean>;
+}`
     },
   ];
 
@@ -32,101 +78,127 @@ export default function Engineering() {
     >
       <div className="max-w-6xl w-full flex flex-col items-center">
         
-        {/* Title */}
-        <div className="text-center max-w-2xl mb-20 space-y-4">
-          <span className="text-[9px] font-bold uppercase tracking-widest text-brand-emerald">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mb-16 space-y-4">
+          <span className="text-[9px] font-bold uppercase tracking-widest text-brand-emerald bg-brand-emerald/10 px-3 py-1 rounded-full border border-brand-emerald/20">
             ENGINEERING EXCELLENCE
           </span>
           <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tight text-white leading-tight">
             Crafting Durable Code Systems.
           </h2>
           <p className="text-white/60 font-light text-base md:text-lg">
-            We focus on absolute architectural durability, utilizing strict compile checks and distributed cloud platforms.
+            We build long-term software architecture backbones using strict type systems, distributed edge runtimes, and zero-knowledge encryption.
           </p>
         </div>
 
-        {/* Interactive Diagram Split Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
+        {/* Split Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch w-full">
           
-          {/* Left Side: System Flow Diagram */}
-          <div className="glass-card p-10 rounded-2xl relative w-full h-[420px] flex items-center justify-center overflow-hidden border border-white/5 bg-[#070709]">
-            {/* Mesh grid backdrop */}
-            <div className="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] bg-[size:1.5rem_1.5rem]" />
+          {/* Left Column: Interactive Terminal & Live System Mockup (7 cols) */}
+          <div className="lg:col-span-7 glass-card rounded-2xl border border-white/10 bg-[#08080a] p-6 md:p-8 flex flex-col justify-between relative overflow-hidden shadow-2xl min-h-[460px]">
+            {/* Ambient Lighting */}
+            <div className="absolute top-0 right-0 w-72 h-72 bg-brand-emerald/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-72 h-72 bg-brand-blue/10 rounded-full blur-[100px] pointer-events-none" />
 
-            {/* Nodes structure */}
-            <div className="relative w-full h-full flex flex-col justify-between py-8">
-              
-              {/* Layer 1: Ingestion */}
-              <div className="flex justify-around items-center">
-                <div className="flex flex-col items-center gap-1">
-                  <span className="text-[8px] font-mono text-white/40">API.EDGE</span>
-                  <div className="w-2.5 h-2.5 rounded-full bg-brand-emerald animate-pulse" />
-                </div>
-                <div className="flex flex-col items-center gap-1">
-                  <span className="text-[8px] font-mono text-white/40">AUTH.GATE</span>
-                  <div className="w-2.5 h-2.5 rounded-full bg-brand-teal" />
-                </div>
+            {/* Terminal Header */}
+            <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                <span className="text-[11px] font-mono text-white/50 ml-2">
+                  devyug-engine://{modules[activeStep].id}.spec.ts
+                </span>
               </div>
-
-              {/* Central Processing Node */}
-              <div className="flex justify-center">
-                <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                  className="w-16 h-16 rounded-full border border-white/15 bg-gradient-to-tr from-brand-emerald/10 to-brand-blue/10 flex items-center justify-center relative shadow-[0_0_40px_rgba(20,184,166,0.1)]"
-                >
-                  <Cpu className="w-5 h-5 text-white absolute" />
-                </motion.div>
-              </div>
-
-              {/* Layer 3: Distribution / DBs */}
-              <div className="flex justify-around items-center">
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-white/5 border border-white/5 font-mono text-[8px] text-white/40">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-emerald" />
-                  E2E_TUNNEL
-                </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-white/5 border border-white/5 font-mono text-[8px] text-white/40">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-ping" />
-                  DB_REPLICA
-                </div>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1 text-[9px] font-mono text-brand-emerald bg-brand-emerald/10 border border-brand-emerald/20 px-2 py-0.5 rounded">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-emerald animate-ping" />
+                  SYSTEM ONLINE
+                </span>
               </div>
             </div>
 
-            {/* Glowing lines */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 125,90 L 192,210" stroke="#10b981" strokeWidth="1.5" strokeDasharray="3 3" />
-              <path d="M 260,90 L 192,210" stroke="#14b8a6" strokeWidth="1.5" />
-              <path d="M 192,210 L 125,320" stroke="#10b981" strokeWidth="1.5" />
-              <path d="M 192,210 L 260,320" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
-            </svg>
+            {/* Terminal Body: Code & Metrics */}
+            <div className="flex-1 flex flex-col justify-between space-y-6">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeStep}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.25 }}
+                  className="space-y-4"
+                >
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-mono font-semibold text-brand-emerald">
+                      // {modules[activeStep].title}
+                    </h4>
+                    <span className="text-[10px] font-mono text-white/40">
+                      {modules[activeStep].tagline}
+                    </span>
+                  </div>
+
+                  {/* Code Editor Frame */}
+                  <div className="bg-[#030304] border border-white/10 rounded-xl p-4 font-mono text-xs text-white/80 overflow-x-auto leading-relaxed">
+                    <pre className="text-emerald-400/90 font-mono text-[11px]">
+                      <code>{modules[activeStep].codeSnippet}</code>
+                    </pre>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Dynamic Live Metrics Bar */}
+              <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/5">
+                {modules[activeStep].metrics.map((metric, idx) => (
+                  <div key={idx} className="bg-white/[0.03] border border-white/5 p-3 rounded-lg text-center">
+                    <span className="text-[9px] font-mono text-white/40 uppercase block mb-1">
+                      {metric.label}
+                    </span>
+                    <span className="text-xs font-mono font-bold text-white">
+                      {metric.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Right Side: Detailed Descriptions */}
-          <div className="space-y-6">
-            {modules.map((mod, idx) => (
-              <div
-                key={idx}
-                onMouseEnter={() => setActiveStep(idx)}
-                onMouseLeave={() => setActiveStep(null)}
-                className={`p-6 rounded-xl border transition-all duration-300 cursor-pointer ${
-                  activeStep === idx
-                    ? "bg-white/5 border-brand-emerald/30 translate-x-1"
-                    : "bg-transparent border-white/5 hover:border-white/10"
-                }`}
-              >
-                <div className="flex items-center gap-4 mb-2">
-                  <div className={`p-2 rounded-lg border transition-colors ${
-                    activeStep === idx ? "bg-white/10 border-white/20" : "bg-white/5 border-white/10"
-                  }`}>
-                    {mod.icon}
+          {/* Right Column: Interactive Selector List (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col justify-between gap-4">
+            {modules.map((mod, idx) => {
+              const isActive = activeStep === idx;
+              return (
+                <div
+                  key={mod.id}
+                  onClick={() => setActiveStep(idx)}
+                  className={`p-6 rounded-2xl border transition-all duration-300 cursor-pointer flex-1 flex flex-col justify-center relative overflow-hidden ${
+                    isActive
+                      ? "bg-white/[0.06] border-brand-emerald/40 shadow-xl shadow-brand-emerald/5"
+                      : "bg-white/[0.02] border-white/5 hover:border-white/15 hover:bg-white/[0.04]"
+                  }`}
+                >
+                  {isActive && (
+                    <div className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-brand-emerald to-brand-teal" />
+                  )}
+                  
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className={`p-2 rounded-xl border transition-colors ${
+                      isActive ? "bg-brand-emerald/10 border-brand-emerald/30" : "bg-white/5 border-white/10"
+                    }`}>
+                      {mod.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-white">{mod.title}</h3>
+                      <span className="text-[10px] font-mono text-brand-emerald/80">{mod.tagline}</span>
+                    </div>
                   </div>
-                  <h3 className="text-base font-bold text-white">{mod.title}</h3>
+                  
+                  <p className="text-xs text-white/60 leading-relaxed font-light mt-1">
+                    {mod.description}
+                  </p>
                 </div>
-                <p className="text-xs text-white/50 pl-11 leading-relaxed font-light">
-                  {mod.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>

@@ -1,32 +1,80 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Brain, Cloud, Cpu, Database, Key, ShieldCheck, Zap } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Brain, Cloud, Key, Zap, CheckCircle, ArrowUpRight, Cpu, Network, Database, Shield } from "lucide-react";
 
 export default function Technology() {
   const [activeTab, setActiveTab] = useState<number>(0);
 
-  const modules = [
+  const pillars = [
     {
-      icon: <Brain className="w-4 h-4 text-brand-emerald" />,
-      title: "Artificial Intelligence",
-      description: "Automated schema classification models.",
+      id: "ai",
+      icon: <Brain className="w-5 h-5 text-brand-emerald" />,
+      title: "Predictive AI Models",
+      subtitle: "Automated Clinical Schema Intelligence",
+      description: "Custom neural pipeline models trained to standardize disparate healthcare provider records into unified, structured FHIR-compliant schemas.",
+      stats: [
+        { label: "Accuracy Rate", value: "99.4%" },
+        { label: "Processing Time", value: "< 250ms" },
+        { label: "Format Support", value: "FHIR / HL7 / PDF" },
+      ],
+      features: [
+        "Automated medical record categorization",
+        "Multi-lingual clinical terminology extraction",
+        "Deterministic data integrity validation",
+      ],
     },
     {
-      icon: <Cloud className="w-4 h-4 text-brand-teal" />,
-      title: "Cloud Architecture",
-      description: "Distributed multi-region server nodes.",
+      id: "cloud",
+      icon: <Cloud className="w-5 h-5 text-brand-teal" />,
+      title: "Distributed Cloud Infrastructure",
+      subtitle: "Global Multi-Region Fault Tolerance",
+      description: "Low-latency API gateways deployed across global edge networks to ensure real-time health data sync without single points of failure.",
+      stats: [
+        { label: "Global Nodes", value: "285+ Edges" },
+        { label: "Failover Speed", value: "< 10ms" },
+        { label: "Replication", value: "Multi-Cloud" },
+      ],
+      features: [
+        "Automatic region failover routing",
+        "Edge-cached immutable document assets",
+        "End-to-end telemetry monitoring",
+      ],
     },
     {
-      icon: <Key className="w-4 h-4 text-brand-blue" />,
-      title: "Security Ledger",
-      description: "Zero-knowledge decentralized key storage.",
+      id: "security",
+      icon: <Key className="w-5 h-5 text-brand-blue" />,
+      title: "Zero-Knowledge Cryptography",
+      subtitle: "Decentralized Key Storage & Control",
+      description: "Patient and family health records are secured using client-side cryptographic enclaves. No unauthorized entity can read user health history.",
+      stats: [
+        { label: "Cipher", value: "AES-256-GCM" },
+        { label: "Key Derivation", value: "Argon2id" },
+        { label: "Access Control", value: "User Sealed" },
+      ],
+      features: [
+        "Client-side key generation & storage",
+        "Granular family member access permissions",
+        "Auditable cryptographic access logs",
+      ],
     },
     {
-      icon: <Zap className="w-4 h-4 text-white" />,
-      title: "Latency Optimization",
-      description: "Cached edge compilation endpoints.",
+      id: "latency",
+      icon: <Zap className="w-5 h-5 text-amber-400" />,
+      title: "Ultra-Low Latency Engine",
+      subtitle: "Real-time Synchronized Pipelines",
+      description: "Sub-second record retrieval engineered through binary serialization protocols and optimized edge caching tiers.",
+      stats: [
+        { label: "TTFB", value: "< 45ms" },
+        { label: "Protocol", value: "gRPC / HTTP/3" },
+        { label: "Compression", value: "Brotli Tier 11" },
+      ],
+      features: [
+        "Binary payload serialization",
+        "Pre-warmed edge memory caches",
+        "Streaming record payload delivery",
+      ],
     },
   ];
 
@@ -37,135 +85,118 @@ export default function Technology() {
     >
       <div className="max-w-6xl w-full flex flex-col items-center">
         
-        {/* Title */}
-        <div className="text-center max-w-2xl mb-20 space-y-4">
-          <span className="text-[9px] font-bold uppercase tracking-widest text-brand-blue">
+        {/* Title Header */}
+        <div className="text-center max-w-2xl mb-16 space-y-4">
+          <span className="text-[9px] font-bold uppercase tracking-widest text-brand-blue bg-brand-blue/10 px-3 py-1 rounded-full border border-brand-blue/20">
             TECHNOLOGY STACK
           </span>
           <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tight text-white leading-tight">
-            Our Architecture Nodes.
+            Architected for Scale & Trust.
           </h2>
           <p className="text-white/60 font-light text-base md:text-lg">
-            We write durable software frameworks utilizing modern advancements in AI, zero-knowledge privacy, and distributed scaling.
+            Our engineering stack combines advancements in machine learning, zero-knowledge security, and multi-region cloud execution.
           </p>
         </div>
 
-        {/* Layout split: interactive diagram left, tabs right */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
+        {/* Main Interactive Matrix Box */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch w-full">
           
-          {/* Left Side: Dynamic SVG Interactive Diagram */}
-          <div className="glass-card p-8 rounded-2xl relative w-full h-[400px] flex items-center justify-center overflow-hidden border border-white/5 bg-[#070709]">
-            {/* Soft grid background */}
-            <div className="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-70" />
-
-            {/* Network Diagram Core */}
-            <div className="relative w-full h-full flex flex-col justify-between py-6">
-              
-              {/* Row 1: Left Node and Right Node */}
-              <div className="flex justify-between px-12">
-                {/* AI Node */}
-                <motion.div
-                  animate={{ y: activeTab === 0 ? [0, -4, 0] : 0 }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-colors ${
-                    activeTab === 0 ? "bg-white/5 border-brand-emerald/40" : "bg-transparent border-white/5"
+          {/* Left Side: Navigation Tabs (4 cols) */}
+          <div className="lg:col-span-4 flex flex-col gap-3">
+            {pillars.map((pillar, idx) => {
+              const isActive = activeTab === idx;
+              return (
+                <button
+                  key={pillar.id}
+                  onClick={() => setActiveTab(idx)}
+                  className={`text-left p-5 rounded-2xl border transition-all duration-300 flex items-center justify-between relative overflow-hidden ${
+                    isActive
+                      ? "bg-white/[0.07] border-white/20 shadow-xl"
+                      : "bg-white/[0.02] border-white/5 hover:border-white/10 hover:bg-white/[0.04]"
                   }`}
                 >
-                  <Brain className="w-5 h-5 text-brand-emerald" />
-                  <span className="text-[9px] font-bold text-white/50 tracking-wider">AI AGENT</span>
-                </motion.div>
-
-                {/* Cloud Node */}
-                <motion.div
-                  animate={{ y: activeTab === 1 ? [0, -4, 0] : 0 }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-colors ${
-                    activeTab === 1 ? "bg-white/5 border-brand-teal/40" : "bg-transparent border-white/5"
-                  }`}
-                >
-                  <Cloud className="w-5 h-5 text-brand-teal" />
-                  <span className="text-[9px] font-bold text-white/50 tracking-wider">CLOUD NODE</span>
-                </motion.div>
-              </div>
-
-              {/* Central Hub representing Devyug Core */}
-              <div className="flex justify-center my-4">
-                <motion.div
-                  animate={{ scale: [1, 1.03, 1] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-24 h-24 rounded-full border border-white/10 bg-gradient-to-tr from-brand-emerald/10 via-brand-teal/5 to-brand-blue/10 flex flex-col items-center justify-center relative shadow-[0_0_50px_rgba(16,185,129,0.06)]"
-                >
-                  <Cpu className="w-6 h-6 text-white mb-0.5 animate-pulse" />
-                  <span className="text-[8px] font-bold text-white/80 uppercase tracking-widest">DEVYUG CORE</span>
-                </motion.div>
-              </div>
-
-              {/* Row 3: Security Node and Performance Node */}
-              <div className="flex justify-between px-12">
-                {/* Security Node */}
-                <motion.div
-                  animate={{ y: activeTab === 2 ? [0, -4, 0] : 0 }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-colors ${
-                    activeTab === 2 ? "bg-white/5 border-brand-blue/40" : "bg-transparent border-white/5"
-                  }`}
-                >
-                  <Key className="w-5 h-5 text-brand-blue" />
-                  <span className="text-[9px] font-bold text-white/50 tracking-wider">CRYPT ENGINE</span>
-                </motion.div>
-
-                {/* Performance Node */}
-                <motion.div
-                  animate={{ y: activeTab === 3 ? [0, -4, 0] : 0 }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-colors ${
-                    activeTab === 3 ? "bg-white/5 border-white/30" : "bg-transparent border-white/5"
-                  }`}
-                >
-                  <Zap className="w-5 h-5 text-white" />
-                  <span className="text-[9px] font-bold text-white/50 tracking-wider">LATENCY LOGS</span>
-                </motion.div>
-              </div>
-
-            </div>
-
-            {/* Glowing lines connecting nodes */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" xmlns="http://www.w3.org/2000/svg">
-              {/* Lines from core to nodes */}
-              <path d="M 192,200 L 110,95" stroke={activeTab === 0 ? "#10b981" : "#1f2937"} strokeWidth="1.5" strokeDasharray="3 3" />
-              <path d="M 192,200 L 275,95" stroke={activeTab === 1 ? "#14b8a6" : "#1f2937"} strokeWidth="1.5" />
-              <path d="M 192,200 L 110,305" stroke={activeTab === 2 ? "#3b82f6" : "#1f2937"} strokeWidth="1.5" />
-              <path d="M 192,200 L 275,305" stroke={activeTab === 3 ? "#ffffff" : "#1f2937"} strokeWidth="1.5" strokeDasharray="3 3" />
-            </svg>
+                  <div className="flex items-center gap-3.5">
+                    <div className={`p-2.5 rounded-xl border ${
+                      isActive ? "bg-white/10 border-white/20" : "bg-white/5 border-white/10"
+                    }`}>
+                      {pillar.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-white">{pillar.title}</h3>
+                      <p className="text-[10px] font-mono text-white/40">{pillar.id.toUpperCase()}_NODE</p>
+                    </div>
+                  </div>
+                  <div className={`w-2 h-2 rounded-full transition-colors ${
+                    isActive ? "bg-brand-emerald animate-pulse" : "bg-white/10"
+                  }`} />
+                </button>
+              );
+            })}
           </div>
 
-          {/* Right Side: Tab list */}
-          <div className="space-y-4">
-            {modules.map((pillar, idx) => (
-              <div
-                key={idx}
-                onClick={() => setActiveTab(idx)}
-                className={`p-6 rounded-xl border transition-all duration-300 cursor-pointer ${
-                  activeTab === idx
-                    ? "bg-white/5 border-brand-emerald/30 shadow-lg translate-x-1"
-                    : "bg-transparent border-white/5 hover:border-white/10"
-                }`}
+          {/* Right Side: Detailed Tech Card Visual (8 cols) */}
+          <div className="lg:col-span-8 glass-card rounded-2xl border border-white/10 bg-[#08080a] p-8 flex flex-col justify-between relative overflow-hidden shadow-2xl min-h-[440px]">
+            {/* Background Glow */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-brand-teal/10 rounded-full blur-[120px] pointer-events-none" />
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, x: 15 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -15 }}
+                transition={{ duration: 0.25 }}
+                className="space-y-8 flex-1 flex flex-col justify-between"
               >
-                <div className="flex items-center gap-4 mb-2">
-                  <div className={`p-2 rounded-lg border transition-colors ${
-                    activeTab === idx ? "bg-white/10 border-white/20" : "bg-white/5 border-white/10"
-                  }`}>
-                    {pillar.icon}
+                {/* Header */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-brand-emerald bg-brand-emerald/10 border border-brand-emerald/20 px-2.5 py-1 rounded-full">
+                      NODE OPERATIONAL
+                    </span>
+                    <span className="text-xs font-mono text-white/40">
+                      STACK_VER://2026.08
+                    </span>
                   </div>
-                  <h3 className="text-base font-bold text-white">
-                    {pillar.title}
+                  <h3 className="text-2xl font-display font-bold text-white pt-2">
+                    {pillars[activeTab].title}
                   </h3>
+                  <p className="text-xs font-mono text-brand-teal">
+                    {pillars[activeTab].subtitle}
+                  </p>
+                  <p className="text-xs text-white/70 leading-relaxed font-light pt-2">
+                    {pillars[activeTab].description}
+                  </p>
                 </div>
-                <p className="text-xs text-white/50 leading-relaxed font-light pl-11">
-                  {pillar.description}
-                </p>
-              </div>
-            ))}
+
+                {/* Key Features List */}
+                <div className="space-y-2.5 bg-white/[0.02] border border-white/5 p-4 rounded-xl">
+                  <span className="text-[10px] font-mono uppercase text-white/40 block mb-1">
+                    CAPABILITY SPECIFICATIONS
+                  </span>
+                  {pillars[activeTab].features.map((feat, idx) => (
+                    <div key={idx} className="flex items-center gap-2.5 text-xs text-white/80">
+                      <CheckCircle className="w-3.5 h-3.5 text-brand-emerald shrink-0" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white/10">
+                  {pillars[activeTab].stats.map((stat, idx) => (
+                    <div key={idx} className="bg-white/[0.03] border border-white/5 p-3.5 rounded-xl text-center">
+                      <span className="text-[9px] font-mono text-white/40 uppercase block mb-1">
+                        {stat.label}
+                      </span>
+                      <span className="text-sm font-mono font-bold text-white">
+                        {stat.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
         </div>
