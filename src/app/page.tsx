@@ -8,7 +8,7 @@ import Engineering from "@/components/Engineering";
 import Innovation from "@/components/Innovation";
 import Technology from "@/components/Technology";
 import Values from "@/components/Values";
-import CTA from "@/components/CTA";
+
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -41,8 +41,7 @@ export default function Home() {
           {/* Values ledger */}
           <Values />
 
-          {/* Waitlist submission form */}
-          <CTA />
+
         </main>
 
         {/* Global Footer */}

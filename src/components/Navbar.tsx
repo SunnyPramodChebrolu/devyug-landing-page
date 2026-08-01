@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -57,16 +57,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center">
-            <a
-              href="#contact"
-              className="group flex items-center gap-1.5 px-4.5 py-2 rounded-full bg-white text-black text-xs font-semibold hover:bg-white/90 transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(255,255,255,0.12)]"
-            >
-              Get In Touch
-              <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
-          </div>
+
 
           {/* Mobile Menu Button */}
           <button
@@ -98,14 +89,7 @@ export default function Navbar() {
                   {link.name}
                 </a>
               ))}
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-1 py-3 mt-4 rounded-full bg-white text-black font-semibold text-sm"
-              >
-                Get In Touch
-                <ArrowUpRight className="w-4 h-4" />
-              </a>
+
             </div>
           </motion.div>
         )}
