@@ -1,3 +1,4 @@
+// Trigger Netlify build check
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
