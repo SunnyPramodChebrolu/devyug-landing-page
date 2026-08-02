@@ -1,67 +1,128 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function LoadingScreen() {
+interface LoadingScreenProps {
+  onComplete: () => void;
+}
+
+export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [progress, setProgress] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const [phase, setPhase] = useState<"loading" | "reveal">("loading");
+  const raf = useRef<number>(0);
+  const start = useRef<number>(0);
+  const duration = 2000;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => setVisible(false), 600); // smooth exit timeout
-          return 100;
-        }
-        // Fake speed up near the end
-        const increment = prev > 80 ? Math.random() * 5 + 1 : Math.random() * 15 + 5;
-        return Math.min(100, Math.floor(prev + increment));
-      });
-    }, 100);
+    start.current = performance.now();
 
-    return () => clearInterval(interval);
-  }, []);
+    const tick = (now: number) => {
+      const elapsed = now - start.current;
+      const p = Math.min(elapsed / duration, 1);
+      // Ease: fast then slow
+      const eased = 1 - Math.pow(1 - p, 3);
+      setProgress(Math.floor(eased * 100));
+
+      if (p < 1) {
+        raf.current = requestAnimationFrame(tick);
+      } else {
+        setProgress(100);
+        setPhase("reveal");
+        setTimeout(onComplete, 800);
+      }
+    };
+
+    raf.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf.current);
+  }, [onComplete]);
 
   return (
     <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }}
-          className="fixed inset-0 z-50 bg-[#050505] flex flex-col items-center justify-center font-display select-none"
-        >
-          {/* Subtle geometric grid background */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff01_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+      <motion.div
+        className="fixed inset-0 z-[9997] flex flex-col justify-between"
+        style={{ backgroundColor: "#040812" }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {/* Top corner — status */}
+        <div className="flex items-start justify-between p-8 lg:p-12">
+          <span
+            className="mono text-[10px] tracking-[0.2em] uppercase"
+            style={{ color: "rgba(59,130,246,0.5)" }}
+          >
+            DEVYUG_INIT
+          </span>
+          <span
+            className="mono text-[10px]"
+            style={{ color: "rgba(59,130,246,0.3)" }}
+          >
+            {String(progress).padStart(3, "0")}%
+          </span>
+        </div>
 
-          <div className="space-y-6 w-64 z-10 flex flex-col items-center">
-            {/* Logo */}
-            <div className="flex items-center gap-2 mb-4">
-              <span className="font-display font-bold text-2xl tracking-widest text-white">
-                DEVYUG
-              </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-emerald animate-ping" />
-            </div>
+        {/* Centre wordmark */}
+        <div className="flex flex-col items-center gap-6">
+          <motion.div
+            className="overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+          >
+            <motion.h1
+              className="text-center font-semibold tracking-[0.15em] text-white"
+              style={{
+                fontFamily: "var(--font-g)",
+                fontSize: "clamp(2.5rem, 8vw, 6rem)",
+                letterSpacing: "0.18em",
+              }}
+              initial={{ y: "100%" }}
+              animate={{ y: phase === "reveal" ? "-110%" : "0%" }}
+              transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+            >
+              DEVYUG
+            </motion.h1>
+          </motion.div>
 
-            {/* Progress line */}
-            <div className="w-full h-[1px] bg-white/5 relative overflow-hidden rounded-full">
-              <motion.div
-                initial={{ width: "0%" }}
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.1 }}
-                className="h-full bg-gradient-to-r from-brand-emerald via-brand-teal to-brand-blue"
-              />
-            </div>
+          <motion.span
+            className="mono text-[10px] tracking-[0.3em] uppercase"
+            style={{ color: "rgba(59,130,246,0.4)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            Engineering Excellence
+          </motion.span>
+        </div>
 
-            {/* Numeric tracker */}
-            <div className="flex justify-between items-center w-full text-[10px] tracking-widest text-white/45 font-mono">
-              <span>SYSTEM BOOTSTRAP</span>
-              <span>{progress}%</span>
-            </div>
+        {/* Bottom — progress bar + coordinates */}
+        <div className="p-8 lg:p-12 flex flex-col gap-4">
+          {/* Progress track */}
+          <div className="relative h-px bg-white/5 overflow-hidden">
+            <motion.div
+              className="absolute left-0 top-0 h-full"
+              style={{ backgroundColor: "#3b82f6" }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.1, ease: "linear" }}
+            />
           </div>
-        </motion.div>
-      )}
+
+          <div className="flex items-center justify-between">
+            <span
+              className="mono text-[9px] tracking-[0.15em]"
+              style={{ color: "rgba(59,130,246,0.3)" }}
+            >
+              ENV_LOAD · RENDER_INIT · SCENE_COMPILE
+            </span>
+            <span
+              className="mono text-[9px]"
+              style={{ color: "rgba(59,130,246,0.25)" }}
+            >
+              v2.0.0
+            </span>
+          </div>
+        </div>
+      </motion.div>
     </AnimatePresence>
   );
 }

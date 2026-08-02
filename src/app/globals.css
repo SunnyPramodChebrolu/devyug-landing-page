@@ -1,131 +1,135 @@
 @import "tailwindcss";
 
+/* ─── Design System ───────────────────────────────────────────────────────── */
 :root {
-  --background: #050505;
-  --foreground: #ffffff;
+  /* Core palette — deep space navy with electric precision blue */
+  --bg: #040812;
+  --bg-mid: #070d1a;
+  --fg: #eef2ff;
+  --fg-muted: rgba(238, 242, 255, 0.45);
+  --fg-dim: rgba(238, 242, 255, 0.18);
+
+  /* Brand blue — extracted from DEVYUG logo metallic tone */
+  --blue: #2563eb;
+  --blue-bright: #3b82f6;
+  --blue-glow: rgba(59, 130, 246, 0.15);
+  --blue-faint: rgba(59, 130, 246, 0.06);
+
+  /* Metallic silver — from logo geometry */
+  --silver: #94a3b8;
+  --silver-dim: rgba(148, 163, 184, 0.12);
+
+  --border: rgba(59, 130, 246, 0.08);
+  --border-bright: rgba(59, 130, 246, 0.18);
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Fonts */
+  --font-g: var(--font-geist), "Helvetica Neue", ui-sans-serif, sans-serif;
+  --font-i: var(--font-inter), "Helvetica Neue", ui-sans-serif, sans-serif;
 }
 
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-space-grotesk), sans-serif;
-  
-  --color-brand-emerald: #10b981;
-  --color-brand-teal: #14b8a6;
-  --color-brand-blue: #3b82f6;
-  
-  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-spin-slow: spin 20s linear infinite;
-  --animate-float: float 6s ease-in-out infinite;
+  --color-blue: #2563eb;
+  --color-bg: #040812;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+/* ─── Reset ───────────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    background: var(--bg);
+    color: var(--fg);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-i);
+    overflow-x: hidden;
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background: var(--blue);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar { width: 1px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--blue); }
+
+  h1, h2, h3 {
+    font-family: var(--font-g);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-  background-color: #050505;
+/* ─── Keyframes ───────────────────────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-body {
-  background-color: #050505;
-  color: #ffffff;
-  overflow-x: hidden;
-  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+@keyframes line-draw {
+  from { stroke-dashoffset: 1000; opacity: 0; }
+  to   { stroke-dashoffset: 0; opacity: 1; }
 }
 
-/* Custom premium scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #050505;
-}
-::-webkit-scrollbar-thumb {
-  background: #1c1c1e;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #2c2c2e;
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
-/* Glassmorphism card utility */
-.glass-card {
-  background: rgba(15, 15, 15, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+/* ─── Utilities ───────────────────────────────────────────────────────────── */
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
 }
 
-.glass-card:hover {
-  border-color: rgba(16, 185, 129, 0.2);
-  box-shadow: 0 12px 40px 0 rgba(16, 185, 129, 0.05);
-}
-
-/* Subtle film grain noise overlay */
-.noise-overlay {
+/* Blue scan-line top */
+.scan-line {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  content: "";
-  opacity: 0.02;
-  pointer-events: none;
-  z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-/* Premium gradient mesh background */
-.radial-mesh {
-  position: absolute;
-  top: 0;
-  left: 0;
   right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(at 10% 20%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
-    radial-gradient(at 90% 10%, rgba(20, 184, 166, 0.05) 0px, transparent 50%),
-    radial-gradient(at 50% 80%, rgba(59, 130, 246, 0.08) 0px, transparent 50%);
-  filter: blur(120px);
-  pointer-events: none;
-  z-index: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--blue-bright), transparent);
+  z-index: 9998;
+  opacity: 0.6;
 }
 
-/* Hide scrollbar for clean visual experience if needed */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* Metric/data monospace label */
+.mono {
+  font-family: "SF Mono", "Fira Code", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
 }
 
-/* Custom typography weights & displays */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-space-grotesk), sans-serif;
-  letter-spacing: -0.02em;
+/* Section padding — full width, generous inset */
+.sp { padding-left: clamp(1.5rem, 6vw, 6rem); padding-right: clamp(1.5rem, 6vw, 6rem); }
+
+/* Blue line accent */
+.accent-line {
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--blue-bright);
 }
 
-/* Magnetic effect glow button */
-.magnetic-btn {
-  position: relative;
-  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.magnetic-btn::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  background: linear-gradient(90deg, #10b981, #14b8a6, #3b82f6);
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0.3;
-  filter: blur(8px);
-  transition: opacity 0.3s ease;
-}
-.magnetic-btn:hover::after {
-  opacity: 0.85;
+/* Glow behind element */
+.glow {
+  filter: drop-shadow(0 0 24px var(--blue-bright));
 }

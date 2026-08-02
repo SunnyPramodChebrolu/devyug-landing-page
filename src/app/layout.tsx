@@ -1,48 +1,52 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Geist, Inter } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "Devyug | Building Technology That Improves Lives",
-  description: "Devyug is a product-first technology company building software that solves meaningful real-world problems. Discover Rakshan, our healthcare continuity platform.",
+  title: "DEVYUG — Engineering Excellence",
+  description:
+    "DEVYUG is a premium software engineering company. Precision, craftsmanship, and engineering excellence at every scale.",
+  metadataBase: new URL("https://devyug.com"),
   openGraph: {
-    title: "Devyug | Building Technology That Improves Lives",
-    description: "Devyug is a product-first technology company building software that solves meaningful real-world problems. Discover Rakshan, our healthcare continuity platform.",
+    title: "DEVYUG — Engineering Excellence",
+    description:
+      "DEVYUG is a premium software engineering company. Precision, craftsmanship, and engineering excellence at every scale.",
     url: "https://devyug.com",
-    siteName: "Devyug",
+    siteName: "DEVYUG",
     type: "website",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Devyug | Building Technology That Improves Lives",
-    description: "Devyug is a product-first technology company building software that solves meaningful real-world problems. Discover Rakshan, our healthcare continuity platform.",
+    title: "DEVYUG — Engineering Excellence",
+    description:
+      "DEVYUG is a premium software engineering company. Precision, craftsmanship, and engineering excellence at every scale.",
   },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}
-    >
-      <body className="min-h-full bg-[#050505] text-white selection:bg-brand-emerald selection:text-black">
-        <div className="noise-overlay" />
+    <html lang="en" className={`${geist.variable} ${inter.variable}`}>
+      <body>
+        {/* Film grain overlay */}
+        <div className="noise" aria-hidden="true" />
+        {/* Blue scan line at top */}
+        <div className="scan-line" aria-hidden="true" />
         {children}
       </body>
     </html>
